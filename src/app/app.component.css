@@ -1,0 +1,7 @@
+:host-context([dir="ltr"]) .header-container {
+    text-align: left;
+}
+
+:host-context([dir="rtl"]) .header-container {
+    text-align: right;
+}

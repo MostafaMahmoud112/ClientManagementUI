@@ -1,0 +1,48 @@
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.k-icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    font-size: 0.875rem;
+    border-radius: 4px;
+}
+
+
+.k-icon-button:hover {
+    background-color: green;
+    border-color: #d0d0d0;
+}
+
+
+.k-icon-delete-button:hover{
+    background-color: #ff0000;
+    border-color: #d0d0d0;
+}
+
+
+.k-icon-delete-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    font-size: 0.875rem;
+    border-radius: 4px;
+}
+
+.k-icon-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 120, 215, 0.3);
+}
+
+
+.k-icon {
+    margin-right: 0.5rem;
+}

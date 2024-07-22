@@ -1,0 +1,119 @@
+<div class="card-container">
+    <!-- <div class="card-header-wrapper">
+        <h3 class="card-title">{{ customMsgService.translate('teamMembers') }}</h3>
+        <div class="card-buttons">
+            <kendo-buttongroup selection="single">
+                <button kendoButton [toggleable]="true" [selected]="true" (click)="onTeamChange(25)">
+                    {{ customMsgService.translate('myClients') }}
+                </button>
+                <button kendoButton [toggleable]="true" (click)="onTeamChange(100)">
+                    {{ customMsgService.translate('allClients') }}
+                </button>
+            </kendo-buttongroup>
+        </div>
+        <span></span>
+    </div> -->
+    <div class="card-component">
+        <kendo-grid
+            [kendoGridBinding]="stockQuotes"
+            kendoGridSelectBy="id"
+            [selectedKeys]="mySelection"
+            [pageSize]="10"
+            [pageable]="true"
+            [sortable]="true"
+            [groupable]="true"
+            [reorderable]="true"
+            [resizable]="true"
+            [height]="480"
+            [columnMenu]="{ filter: true }"
+        >
+            <ng-template kendoGridToolbarTemplate>
+                <kendo-textbox [placeholder]="customMsgService.translate('gridSearch')" kendoTextBox (valueChange)="onFilter($event)">
+                </kendo-textbox>
+                <kendo-grid-spacer></kendo-grid-spacer>
+                <button kendoGridExcelCommand type="button" [svgIcon]="excelIcon">
+                    {{ customMsgService.translate('exportExcel') }}
+                </button>
+                <button kendoGridPDFCommand [svgIcon]="pdfIcon">{{ customMsgService.translate('exportPdf') }}</button>
+            </ng-template>
+            <kendo-grid-column field="Id" [title]="customMsgService.translate('Id')" [width]="100"></kendo-grid-column>
+            <kendo-grid-column field="V" [title]="customMsgService.translate('V')" [width]="100">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input *ngIf="dataItem.dataStatus === 1" type="text" class="form-control" [(ngModel)]="dataItem.V" />
+                    <span *ngIf="dataItem.dataStatus !== 1">{{ dataItem.V }}</span>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="VW" [title]="customMsgService.translate('VW')" [width]="100">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input *ngIf="dataItem.dataStatus === 1" type="text" class="form-control" [(ngModel)]="dataItem.VW" />
+                    <span *ngIf="dataItem.dataStatus !== 1">{{ dataItem.VW }}</span>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="O" [title]="customMsgService.translate('O')" [width]="100">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input *ngIf="dataItem.dataStatus === 1" type="text" class="form-control" [(ngModel)]="dataItem.O" />
+                    <span *ngIf="dataItem.dataStatus !== 1">{{ dataItem.O }}</span>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="C" [title]="customMsgService.translate('C')" [width]="100">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input *ngIf="dataItem.dataStatus === 1" type="text" class="form-control" [(ngModel)]="dataItem.C" />
+                    <span *ngIf="dataItem.dataStatus !== 1">{{ dataItem.C }}</span>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="H" [title]="customMsgService.translate('H')" [width]="100">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input *ngIf="dataItem.dataStatus === 1" type="text" class="form-control" [(ngModel)]="dataItem.H" />
+                    <span *ngIf="dataItem.dataStatus !== 1">{{ dataItem.H }}</span>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="L" [title]="customMsgService.translate('L')" [width]="100">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input *ngIf="dataItem.dataStatus === 1" type="text" class="form-control" [(ngModel)]="dataItem.L" />
+                    <span *ngIf="dataItem.dataStatus !== 1">{{ dataItem.L }}</span>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="T" [title]="customMsgService.translate('T')" [width]="100">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input *ngIf="dataItem.dataStatus === 1" type="text" class="form-control" [(ngModel)]="dataItem.T" />
+                    <span *ngIf="dataItem.dataStatus !== 1">{{ dataItem.T }}</span>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="N" [title]="customMsgService.translate('N')" [width]="100">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input *ngIf="dataItem.dataStatus === 1" type="text" class="form-control" [(ngModel)]="dataItem.N" />
+                    <span *ngIf="dataItem.dataStatus !== 1">{{ dataItem.N }}</span>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="RegDate" [title]="customMsgService.translate('regDate')" [width]="150">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.RegDate | date }}
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [width]="120" [title]="customMsgService.translate('actions')">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="action-buttons" *ngIf="!dataItem.dataStatus || dataItem.dataStatus==4">
+                        <button class="k-button k-primary k-icon-button" (click)="editItem(dataItem)">
+                            <i class="far fa-hand-pointer"></i> {{ customMsgService.translate('select') }}
+                        </button>
+                        <button class="k-button k-primary k-icon-delete-button" (click)="deleteItem(dataItem)">
+                            <i class="fas fa-trash-alt"></i> {{ customMsgService.translate('delete') }}
+                        </button>
+                    </div>
+                    <div class="action-buttons" *ngIf="dataItem.dataStatus==2 || dataItem.dataStatus==1">
+                        <button class="k-button k-primary k-icon-button" (click)="saveItem(dataItem)">
+                            <i class="far fa-hand-pointer"></i> {{ customMsgService.translate('save') }}
+                        </button>
+                        <button class="k-button k-primary k-icon-delete-button" (click)="undoAddEdit(dataItem)">
+                            <i class="fas fa-trash-alt"></i> {{ customMsgService.translate('undo') }}
+                        </button>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-pdf fileName="stockQuotes.pdf" [repeatHeaders]="true"></kendo-grid-pdf>
+            <kendo-grid-excel fileName="stockQuotes.xlsx"></kendo-grid-excel>
+        </kendo-grid>
+    </div>
+    
+    
+</div>
